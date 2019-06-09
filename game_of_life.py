@@ -157,7 +157,7 @@ class Grid:
             The length of the map
         size : int
             Length of one side
-        tolerance : int
+        tolerance : float
             The tolerance of generating alive cells randomly
         active_col  : str
             Colour if alive
@@ -271,22 +271,33 @@ class Grid:
 class App:
     """App class: the actual tkinter usage"""
 
-    #  Initialization function (all the precalled things)
     def __init__(self, length, size, tolerance=0.8):
+        """
+        Initialization function.
 
-        #  length % size NEEDS to = 0
-        self.length = length  # Length of side of window
-        self.size = size  # Length of square
+        Will raise exception if the size of the boxes isn't a factor of the window size then,
+        the boxes don't fit evenly.
 
-        #  If the size of the boxes isn't a factor of the window size
+
+        Parameters
+        ----------
+        length : int
+            Length of side of window
+        size : int
+            Length of square
+        tolerance : float
+            The tolerance of generating alive cells randomly
+        """
+
+        self.length = length
+        self.size = size
+
         if not self.length % self.size == 0:
-            #  The boxes don't fit evenly.
             raise Exception(
                 "The squares don't fit evenly on the screen."
                 + " Box size needs to be a factor of window size."
             )
 
-        #  Create a grid object which can manipulate the squares
         self.grid = Grid(
             self.length,
             self.size,
@@ -295,72 +306,66 @@ class App:
             inactive_col="white",
         )
 
-        #  tkinter event
         self.root = Tk()
 
-        #  Canvas object to display squares
         self.canvas = Canvas(self.root, height=self.length, width=self.length)
-        #  Set on to the window
+
         self.canvas.pack()
 
-        #  updates canvas
         self.items = self.update_canvas()
 
-        #  Creates a loop within the mainloop
         self.root.after(5, self.refresh_screen)
-        #  Mainloop in tkinter, run the code and loop it until exit called
+
         self.root.mainloop()
 
-    # Refreshes the screen
     def refresh_screen(self):
-        #  Applies the rules to the squares
+        """Applies the rules to the squares."""
         self.grid.rules()
-        #  Updates canvas
         self.update_canvas(canvas_done=True, canvas_items=self.items)
 
-        #  Reruns the loop
         self.root.after(5, self.refresh_screen)
 
-    #  Updates canvas
     def update_canvas(self, canvas_done=False, canvas_items={}):
+        """
+        If the canvas hasn't already been populated with the .create_rect()
+            then Loop through the squares.
+        Draws a rectangle and stores the data in a dict corresponding to the rectangle drawn
+        Need this to update the rectangles' colours later
+        If canvas_items has been specified
+            Loop through the canvas items
+                Update the canvas to the new colour
 
-        #  The dict.items() of each square
-        #  { coord of square: square object }
+        Returns
+        -------
+        dict
+            Returns the canvas items
+        ValueError
+            No canvas_items so raise a value error
+        """
         square_items = self.grid.squares
 
-        #  If the canvas hasn't already been populated with the .create_rect()
         if not canvas_done:
-            #  Loop through the squares
             for coords, square in square_items.items():
-                (b_r_x, b_r_y) = square.rect()  #  The bottom right coordinates
-                (t_l_x, t_l_y) = coords  #  Top left coordinates
+                (b_r_x, b_r_y) = square.rect()
+                (t_l_x, t_l_y) = coords
 
-                #  Draws a rectangle and stores the data in a dict corresponding to the rectangle drawn
-                #  Need this to update the rectangles' colours later
                 canvas_items[coords] = self.canvas.create_rectangle(
                     t_l_x, t_l_y, b_r_x, b_r_y, fill=square.get_colour()
                 )
 
-            #  Return the canvas items
-            #  { coordinates of square drawn: canvas_rectangle object }
             return canvas_items
 
-        #  The canvas has already been populated with squares
-        #  Need this as tkinter doesn't draw on top.
         else:
-            #  If canvas_items has been specified
+
             if canvas_items:
-                #  Loop through the canvas items
                 for coords, item in canvas_items.items():
-                    #  Update the canvas to the new colour
+
                     self.canvas.itemconfig(item, fill=square_items[coords].get_colour())
-            #  No canvas_items so raise a value error
             else:
-                #  Throws out an error
                 raise ValueError(
                     "No canvas_items given for re-iterating over canvas squares."
                 )
 
 
 if __name__ == "__main__":
-    app = App(1000, 25, tolerance=0.7)
+    app = App(1000, 25, tolerance=0.5)
