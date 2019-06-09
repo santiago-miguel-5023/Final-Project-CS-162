@@ -51,32 +51,3 @@ The rule of my game of life follows the same rules as Conway's game of life:
 
     """
    ```
-
-## Requirements
-
-In order to receive full credit your project must include all of the following:
-    • Object oriented design: your code must be written in an object-oriented manner. You must
-      design and implement a set of classes in a logical hierarchy.
-    • Functional decomposition: in each class, your code needs to be written as a set of functions that
-      each perform a single task.
-    • At least one of these functions must be recursive.
-    • Error handling: you should use exception handling to deal with errors that occur during the
-      execution of your program. Recover from errors when possible, provide the user with a friendly
-      explanation of what went wrong before exiting the program if you cannot recover.
-    • File I/O: your program must read from and write to one or more files.
-    • You must write tests for all your functions. Be sure your tests cover both good and bad input.
-      For example, when asking for numeric input from the user you should write tests that supply
-      input that both can and cannot be successfully cast.
-
-### Part 1
-
-
-
-### Part 2
-
-
-
-```python
-with pytest.raises(Exception):
-    my_func()
-```
