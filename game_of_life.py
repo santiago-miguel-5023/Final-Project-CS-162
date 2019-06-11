@@ -368,5 +368,5 @@ class App:
 
 
 if __name__ == "__main__":
-    APP = App(1, 25, tolerance=0)
+    APP = App(1, 25, tolerance=0)  # raise Exception
     # APP = App(1000, 25, tolerance=0.08)
