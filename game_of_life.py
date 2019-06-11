@@ -300,8 +300,7 @@ class App:
 
         if not self.map_size % self.side_length == 0:
             raise Exception(
-                "The squares don't fit evenly on the screen."
-                + " Box side_length needs to be a factor of window side_length."
+                "The squares don't fit evenly on the screen. Box side_length needs to be a factor of window side_length."
             )
 
         self.grid = Grid(
@@ -369,4 +368,5 @@ class App:
 
 
 if __name__ == "__main__":
-    APP = App(1000, 25, tolerance=0.08)
+    APP = App(1, 25, tolerance=0)
+    # APP = App(1000, 25, tolerance=0.08)
