@@ -75,12 +75,6 @@ class Square:
         off the board as x value is top left.
         Checks if y value is >= 0 and if the bottom side of the square is not
         off the board as y value is top left.
-
-        Returns
-        -------
-        Boolean
-            True or false
-
         """
         (x_coor, y_coor) = coord
 
@@ -92,7 +86,7 @@ class Square:
         """
         Returns all the neighbours to the object
 
-        self.coords is a tuple. Extracting the x and y of it
+        self.coords is a tuple we extract the x and y of it
 
         filter(func, iterable) loops over each value and keeps the value if the
         function called per value is true.
@@ -368,5 +362,5 @@ class App:
 
 
 if __name__ == "__main__":
-    APP = App(1, 25, tolerance=0)  # raise Exception
-    # APP = App(1000, 25, tolerance=0.08)
+    # APP = App(1, 25, tolerance=0)  #raise Exception
+    APP = App(1000, 25, tolerance=0.08) #starts program

@@ -11,3 +11,4 @@ def test_raise_exception():
         "The squares don't fit evenly on the screen. Box side_length needs to be a factor of window side_length."
         in str(excinfo.value)
     )
+
